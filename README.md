@@ -9,9 +9,13 @@ This project demostrates how to use Aviator.
 ### RVM
 
 The Ruby Version Manager is a great tool for easily managing 
-multiple Ruby versions in your machine. Install it with:
+multiple Ruby versions in your machine. Install it with the
+following command:
 
     curl -L https://get.rvm.io | bash -s stable --ruby=1.9.3
+
+**Ubuntu users** If you are using Gnome-terminal, you may need to
+set a preference item in your terminal. Please visit [this RVM page](https://rvm.io/integration/gnome-terminal) for more info.
 
 For more information about RVM, please see https://rvm.io/
 
