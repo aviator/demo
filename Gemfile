@@ -1,3 +1,3 @@
 source 'https://rubygems.org'
 
-gem 'aviator', :git => 'git@github.com:aviator/aviator.git', :branch => 'master'
+gem 'aviator', :git => 'https://github.com:aviator/aviator.git', :branch => 'master'
