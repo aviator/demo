@@ -1,6 +1,6 @@
 GIT
-  remote: git@github.com:aviator/aviator.git
-  revision: d0b6f5e7b9cb98d17199d2144a9a642cec938da5
+  remote: https://github.com/aviator/aviator.git
+  revision: 50fe5efa5e6893f7d89ddd03d9b794ea2b2b95d2
   branch: master
   specs:
     aviator (0.0.5)
