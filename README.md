@@ -21,7 +21,7 @@ For more information about RVM, please see https://rvm.io/
 
 ### Clone This Repo
 
-    git clone git@github.com:aviator/demo.git && cd demo
+    git clone https://github.com/aviator/demo.git && cd demo
 
 ### Install the dependencies
 
