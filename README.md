@@ -35,8 +35,8 @@ First, copy the example config file
 
 Edit the following in `aviator.yml`:
 
-* `host_uri` - Should point to a valid keystone API
-* `username` - A valid username that exists in <host_uri>
+* `host_uri` - Should point to a valid keystone API endpoint
+* `username` - A valid username that exists in `host_uri`
 * `password` - The user's password
 * `tenantName` - Tenant/project where the user has a role. Preferably one where the user has an admin role so that you can also access admin enpoints in some of the demo files.
     
