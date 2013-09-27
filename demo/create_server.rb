@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'aviator'
+require 'time'
 require 'pp'
 
 session = Aviator::Session.new(
