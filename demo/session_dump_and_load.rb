@@ -35,7 +35,7 @@ session2 = Aviator::Session.load(
 
 # Validation after load is not required but is good practice.
 unless session2.validate
-  puts "It looks like the token associated with the session has expired!"
+  raise "It looks like the token associated with the session has expired!"
 end
 
 puts "Session dump loaded! Press a key to get a list of tenants you have a role in."
