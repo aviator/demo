@@ -14,6 +14,8 @@ following command:
 
     curl -L https://get.rvm.io | bash -s stable --ruby=1.9.3
 
+Close your terminal and re-open it for RVM to fully take effect.
+
 **Ubuntu users** If you are using Gnome-terminal, you may need to
 set a preference item in your terminal. Please visit [this RVM page](https://rvm.io/integration/gnome-terminal) for more info.
 
@@ -22,6 +24,17 @@ For more information about RVM, please see https://rvm.io/
 ### Clone This Repo
 
     git clone https://github.com/aviator/demo.git && cd demo
+
+### Double-check your RVM installation
+
+While inside the demo directory, run:
+
+    rvm gemset name
+
+The output should be `aviatordemo`. If it's not, please check 
+the [RVM integration page](https://rvm.io/integration) for any 
+additional steps needed for your terminal or environment.
+
 
 ### Install the dependencies
 
