@@ -6,9 +6,9 @@ require 'aviator'
 require 'pp'
 
 session = Aviator::Session.new(
-            config_file: Pathname.new(__FILE__).join('../../aviator.yml').expand_path,
+            config_file: Pathname.new(__FILE__).join('..', '..', 'aviator.yml').expand_path,
             environment: :demo,
-            log_file:    Pathname.new(__FILE__).join('../../aviator.log').expand_path
+            log_file:    Pathname.new(__FILE__).join('..', '..', 'aviator.log').expand_path
           )
  
 session.authenticate
