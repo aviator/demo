@@ -28,7 +28,10 @@ puts "\nAt this point, you can store the above session dump and reload it "\
      "Press a key to load the dump into a new session object."
 gets
 
-session2 = Aviator::Session.load(session_dump)
+session2 = Aviator::Session.load(
+             session_dump,
+             log_file: Pathname.new(__FILE__).join('..', '..', 'aviator.log').expand_path
+           )
 
 # Validation after load is not required but is good practice.
 unless session2.validate
