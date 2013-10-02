@@ -9,4 +9,4 @@ demo:
   auth_credentials:
     username: demo
     password: demo
-    tenantName: demo
+    tenant_name: demo
