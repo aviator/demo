@@ -1,11 +1,12 @@
 GIT
   remote: https://github.com/aviator/aviator.git
-  revision: 50fe5efa5e6893f7d89ddd03d9b794ea2b2b95d2
+  revision: e062ca3ff05d9ca7507dd9e89682fc8b4f424517
   branch: master
   specs:
-    aviator (0.0.5)
+    aviator (0.0.6)
       activesupport (>= 3.2.8)
       faraday (~> 0.8.0)
+      terminal-table (>= 1.4.5)
       thor (~> 0.18.1)
 
 GEM
@@ -24,6 +25,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.8.0)
     multipart-post (1.2.0)
+    terminal-table (1.4.5)
     thor (0.18.1)
     thread_safe (0.1.3)
       atomic
