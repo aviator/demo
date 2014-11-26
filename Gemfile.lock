@@ -22,7 +22,10 @@ GEM
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
     i18n (0.6.5)
+    metaclass (0.0.4)
     minitest (4.7.5)
+    mocha (1.1.0)
+      metaclass (~> 0.0.1)
     multi_json (1.8.0)
     multipart-post (1.2.0)
     terminal-table (1.4.5)
@@ -36,3 +39,5 @@ PLATFORMS
 
 DEPENDENCIES
   aviator!
+  minitest
+  mocha (~> 1.1.0)
