@@ -5,38 +5,46 @@ require 'bundler/setup'
 
 require 'aviator'
 
+#
+# Sample Aviator consumer object
+#
 class AviatorConsumer
 
-  def do_one_thing
-    session = authenticate
-
-    keystone = session.identity_service
-    response = keystone.request(:list_tenants)
-    response.body
+  def do_one_thing(username, password, tenant_id)
+    openstack = authenticate
+    response = openstack.request(:identity,
+                                 :create_user,
+                                 :params => {
+                                   :name      => username,
+                                   :password  => password,
+                                   :tenant_id => tenant_id })
+    response[:body][:user][:id]
   end
 
-  def do_another_thing
-    session = authenticate
-
-    response = session.compute_service.request(:create_server)
-    response.status
+  def do_another_thing(username, password)
+    openstack = authenticate :params => { :username => username, :password => password }
+    openstack.authenticated?
   end
+
 
   private
 
-  def authenticate
+  def authenticate(opts={})
     openstack = Aviator::Session.new(
                   config_file: 'path/to/aviator.yml',
                   environment: :production,
                   log_file:    'path/to/aviator.log'
                 )
-    openstack.authenticate
+    openstack.authenticate(opts)
     openstack
   end
 
 end
 
 
+#
+# Sample unit test of consumer object
+#
 gem 'mocha'
 require 'minitest/unit'
 require 'minitest/autorun'
@@ -45,54 +53,85 @@ require 'mocha/mini_test'
 
 describe AviatorConsumer do
 
-  # Shared objects
-
-  def consumer
-    @consumer ||= AviatorConsumer.new
-  end
-
-  def mock_session
-    @mock ||= mock('Aviator::Session')
-  end
-
-  # Common expectation for session auth
-
-  def expects_authentication
-      options = {
-        config_file: 'path/to/aviator.yml',
-        environment: :production,
-        log_file:    'path/to/aviator.log'
-      }
-      Aviator::Session.expects(:new).with(options).returns(mock_session)
-      mock_session.expects(:authenticate)
-  end
-
-  # Expectations
-
   it "must do one thing" do
-    mock_keystone = mock('Aviator::Service')
-    mock_response = mock('Aviator::Response')
-    mock_body = { id: 'something' }
+    #
+    # Prepare mock session
+    #
+    mock_session = mock('Aviator::Session')
+    Aviator::Session.expects(:new).returns(mock_session)
 
-    expects_authentication
-    mock_session.expects(:identity_service).returns(mock_keystone)
-    mock_keystone.expects(:request).with(:list_tenants).returns(mock_response)
-    mock_response.expects(:body).returns(mock_body)
+    mock_session.expects(:authenticate)
 
-    consumer.do_one_thing.must_equal mock_body
+    new_user    = 'anotheruser'
+    new_user_id = 'asdflkj123'
+    new_pswd    = 'anotherpswd'
+    tenant_id   = 'atenantid'
+
+    mock_session
+      .expects(:request)
+      .with(:identity, :create_user,
+            :params => {
+              :name      => new_user,
+              :password  => new_pswd,
+              :tenant_id => tenant_id })
+      .returns(Hashish.new({
+                :status => 200,
+                :headers => {
+                  :stuff => :here},
+                :body => {
+                  :user => {
+                    :name     => new_user,
+                    :id       => new_user_id,
+                    :tenantId => tenant_id,
+                    :enabled  => true,
+                    :email    => "dump@foo.com"
+                  }
+                }
+              }))
+
+    #
+    # Exercise consumer code
+    #
+    consumer = AviatorConsumer.new
+    user_id = consumer.do_one_thing(new_user, new_pswd, tenant_id)
+
+    #
+    # Validate results
+    #
+    user_id.must_equal new_user_id
   end
+
 
   it "must do another thing" do
-    mock_nova = mock('Aviator::Service')
-    mock_response = mock('Aviator::Response')
-    mock_status = 200
+    #
+    # Prepare mock session
+    #
+    mock_session = mock('Aviator::Session')
+    Aviator::Session.expects(:new).returns(mock_session)
 
-    expects_authentication
-    mock_session.expects(:compute_service).returns(mock_nova)
-    mock_nova.expects(:request).with(:create_server).returns(mock_response)
-    mock_response.expects(:status).returns(mock_status)
+    username = 'someuser'
+    password = 'password'
 
-    consumer.do_another_thing.must_equal mock_status
+    mock_session
+      .expects(:authenticate)
+      .with({:params => {
+               :username => username,
+               :password => password}})
+
+    mock_session
+      .expects(:authenticated?)
+      .returns(true)
+
+    #
+    # Exercise consumer code
+    #
+    consumer = AviatorConsumer.new
+    result = consumer.do_another_thing(username, password)
+
+    #
+    # Validate results
+    #
+    result.must_equal true
   end
 
 end
